@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="https://wmcoombs.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://wmcoombs.github.io/" rel="alternate" type="text/html" /><updated>2019-04-16T21:23:02+01:00</updated><id>https://wmcoombs.github.io/</id><title type="html">AMPLE - A Material Point Learning Environment</title><subtitle>AMPLE A Material Point Learning Environment
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="https://wmcoombs.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://wmcoombs.github.io/" rel="alternate" type="text/html" /><updated>2019-04-16T21:33:26+01:00</updated><id>https://wmcoombs.github.io/</id><title type="html">AMPLE - A Material Point Learning Environment</title><subtitle>AMPLE A Material Point Learning Environment
 </subtitle><author><name>AMPLE&amp;#58;  A Material Point Learning Environment</name></author><entry><title type="html">Material Point Method</title><link href="https://wmcoombs.github.io/mpm/" rel="alternate" type="text/html" title="Material Point Method" /><published>2019-01-08T06:00:00+00:00</published><updated>2019-01-08T06:00:00+00:00</updated><id>https://wmcoombs.github.io/mpm</id><content type="html" xml:base="https://wmcoombs.github.io/mpm/">&lt;p&gt;Numerical approaches based on Lagrangian mechanics, particularly using the finite element method, dominate the analysis of solid mechanics problems.  However there are issues with mesh-based Lagrangian approaches for problems involving very large deformation in that the discretisation used to analyse the physical problem becomes distorted leading to inaccurate results and, in extreme cases, eventual breakdown of the numerics due to element inversion.&lt;/p&gt;
 
 &lt;p&gt;The &lt;strong&gt;Material Point Method&lt;/strong&gt; (MPM) is an alternative to pure Lagrangian approaches and is well suited to problems involving very large deformations.  The method was developed in the 1990’s by Sulsky &lt;em&gt;et al.&lt;/em&gt; [1] as a solid mechanics extension to the FLuid Implicit Particle (FLIP) method [2] which itself was developed from the Particle-In-Cell (PIC) method [3].  In the material point method, equilibrium computations take place on a background grid but the calculations are based on information (mass, volume, stress, state variables, etc.) held at material points that are convected through the background grid as the material deforms. This allows computations to take place on an undistorted background mesh (structured or unstructured) whilst modelling problems involving very large deformations. One way to summarise the material point method is: &lt;em&gt;a finite element method where the integration points (material points) are allowed to move independently of the mesh&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;AMPLE, unlike most of the MPM community, adopts an implicit formulation.  The key steps in an implicit implementation of the material point method are shown below.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/AMPLE/assets/img/MPMsteps.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/MPMsteps.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -33,7 +33,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/AMPLE/assets/img/curve2.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/curve2.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -121,7 +121,7 @@
 
 &lt;p&gt;These steps are shown schematically below.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/AMPLE/assets/img/MPMsteps.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/MPMsteps.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -137,7 +137,7 @@
 
 &lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt; is the gravitational acceleration (taken to be 10m/s&lt;script type=&quot;math/tex&quot;&gt;^2&lt;/script&gt;), &lt;script type=&quot;math/tex&quot;&gt;l_0&lt;/script&gt; is the initial height of the column and &lt;script type=&quot;math/tex&quot;&gt;Z&lt;/script&gt; is the initial vertical position within the column. If Poisson’s ratio is zero the stresses in the horizontal directions are equal to zero when the behaviour is elastic&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/AMPLE/assets/img/convergence.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/convergence.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;material-model-elasto-plastic-collapse&quot;&gt;Material model: elasto-plastic collapse&lt;/h2&gt;
 
@@ -145,7 +145,7 @@
 
 &lt;p&gt;The third example is a plane strain analysis of an elastic beam subjected to a vertical end load of $100$kN applied over 50 equal loadsteps.  The beam had an initial length &lt;script type=&quot;math/tex&quot;&gt;l_0=10&lt;/script&gt;m and depth &lt;script type=&quot;math/tex&quot;&gt;d_0=1&lt;/script&gt;m and the material had a Young’s modulus of &lt;script type=&quot;math/tex&quot;&gt;12&lt;/script&gt;MPa and a Poisson’s ratio of &lt;script type=&quot;math/tex&quot;&gt;0.2&lt;/script&gt;.  The geometry and boundary conditions with &lt;script type=&quot;math/tex&quot;&gt;h=0.5&lt;/script&gt;m and &lt;script type=&quot;math/tex&quot;&gt;2^2&lt;/script&gt; material points per initially active background elements.  The force was split across the two material points closest to the neutral axis at the end of the beam (the black-filled circles).  The neutral axis of the beam was pinned at its left hand edge and roller boundary conditions were imposed on the other background grid nodes at the root of the beam, as shown below.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/AMPLE/assets/img/beamSetup.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/beamSetup.jpg&quot; alt=&quot;MPM steps&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In AMPLE it is suggested that users use the included scripts to generate VTK files and visualise the deformation of the material points using a VTK view (such as &lt;a href=&quot;https://wci.llnl.gov/simulation/computer-codes/visit/&quot; target=&quot;_blank&quot;&gt;VisIt&lt;/a&gt; or &lt;a href=&quot;https://www.paraview.org/&quot; target=&quot;_blank&quot;&gt;ParaView&lt;/a&gt;).  The VTK files are generated by the following two functions:&lt;/p&gt;
 
