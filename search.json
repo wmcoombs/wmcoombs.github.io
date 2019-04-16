@@ -4,7 +4,7 @@
       "title"    : "Material Point Method",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/mpm/",
+      "url"      : "/mpm/",
       "date"     : "2019-01-08 06:00:00 +0000"
     } ,
   
@@ -12,7 +12,7 @@
       "title"    : "Development Principles",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/principles/",
+      "url"      : "/principles/",
       "date"     : "2019-01-07 06:00:00 +0000"
     } ,
   
@@ -20,7 +20,7 @@
       "title"    : "Formulation",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/formulation/",
+      "url"      : "/formulation/",
       "date"     : "2019-01-06 06:00:00 +0000"
     } ,
   
@@ -28,7 +28,7 @@
       "title"    : "Code Structure",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/structure/",
+      "url"      : "/structure/",
       "date"     : "2019-01-05 06:00:00 +0000"
     } ,
   
@@ -36,7 +36,7 @@
       "title"    : "Test cases",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/tests/",
+      "url"      : "/tests/",
       "date"     : "2019-01-04 06:00:00 +0000"
     } ,
   
@@ -44,7 +44,7 @@
       "title"    : "Publications",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/publications/",
+      "url"      : "/publications/",
       "date"     : "2019-01-03 06:00:00 +0000"
     } ,
   
@@ -52,7 +52,7 @@
       "title"    : "Acknowledgements",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/acknowledgements/",
+      "url"      : "/acknowledgements/",
       "date"     : "2019-01-02 06:00:00 +0000"
     } ,
   
@@ -60,7 +60,7 @@
       "title"    : "Download",
       "category" : "",
       "tags"     : "",
-      "url"      : "/AMPLE/download/",
+      "url"      : "/download/",
       "date"     : "2019-01-01 06:00:00 +0000"
     } 
   
