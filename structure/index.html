@@ -71,7 +71,82 @@
           <h1 class="page-title">Code Structure</h1>
           <!--<div class="page-date"><time datetime="2019-01-05 06:00:00 +0000">2019, Jan 05</time></div>-->
         </div>
-        <p>Page explaining about the code structure</p>
+        <p>AMPLE’s high-level structure is below and comprises three loops:</p>
+
+<ul>
+  <li>
+    <p>a loadstep <strong>for</strong> loop that first determines the external forces at the nodes for the current step and then calculates the nodal basis functions and spatial derivatives for each material point.  The code then enters a <strong>while</strong> loop to find equilibrium between the internal and external forces. Once equilibrium has been obtained the material point positions and internal variables (deformation gradient, stress, elastic logarithmic strain, domain size, etc.) are updated.</p>
+  </li>
+  <li>
+    <p>a Newton-Raphson <strong>while</strong> loop to solve the global equilibrium equations on the background mesh.  The loop first solves the non-linear system of equations to determine the displacement and reaction force increments at the nodes before moving onto the determination of the current internal force and stiffness via a material point <strong>for</strong> loop.</p>
+  </li>
+  <li>
+    <p>a material point <strong>for</strong> loop that determines the internal force and stiffness contribution of each of the material points to the background mesh.</p>
+  </li>
+</ul>
+
+<p><img src="/assets/img/alg.jpg" alt="MPM steps" /></p>
+
+<p>AMPLE’s main script, <code class="highlighter-rouge">ample.m</code>, is shown in its entirety below.  The format of the code aligns with the algorithm shown above.  Comments are shown in green and have been truncated on the right hand side for clarity of the executed code.  Only two of the three loops described above can be seen in the main <code class="highlighter-rouge">ample.m</code> file: (1) a loadstep <strong>for</strong> loop spanning lines 9 through 33 and
+(2) a Newton-Raphson <strong>while</strong> loop over lines 21 through 30.  The material point loop is contained within the  <code class="highlighter-rouge">detMPs.m</code> function on line 25.</p>
+
+<p><img src="/assets/img/ampleMain.jpg" alt="MPM steps" /></p>
+
+<p>The main <code class="highlighter-rouge">ample.m</code> script calls eight functions, the purpose of each of these functions is explained below:</p>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">setupGrid</code>: called on line 3 of <code class="highlighter-rouge">ample.m</code>, the function returns the analysis-specific information such as details of the background grid and any information held at material points (position, material properties, etc.).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">elemMPinfo</code>: called on line 1 of <code class="highlighter-rouge">ample.m</code>, the function determines the parent element(s) of each material point and the nodes that the material point influences.  Note that for the standard material point method each material point will only have one parent element but in the generalised interpolation material point method the domain of the point can overlap multiple elements.  The function also determines the basis functions at each of the material points and their spatial gradients based on the nodal positions at the start of the load step.  The function calls three other functions: <code class="highlighter-rouge">elemForMP</code> that finds the element(s) associated with the material point, <code class="highlighter-rouge">nodesForMP</code> that determines a unique list of nodes based on the element(s) associated with the material point and <code class="highlighter-rouge">MPMbasis</code> that determines the basis functions for the material point.  This function depends on the type of material point method and the form of the background mesh.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">detExtForce</code>: called on line 12 of <code class="highlighter-rouge">ample.m</code>, the function determines the external force vector at the start of the load step based on the body and point forces at material points.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">detFDoFs</code>: called on line 18 of <code class="highlighter-rouge">ample.m</code>, the function determines a list of the unknown displacement degrees of freedom of the background mesh based on the elements that <em>contain</em> material points and the displacement boundary conditions imposed on the mesh.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">linSolve</code>: called on line 22 of <code class="highlighter-rouge">ample.m</code>, the function solves the linear system of equations to determine the iterative increment in the nodal displacements based on the current out-of-balance force residual.  The function also determines the increment in the reaction forces due to the constrained degrees of freedom on the background mesh.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">detMPs</code>: called on line 25 of <code class="highlighter-rouge">ample.m</code>, the function determines the stiffness and internal force contribution of each material point to the background mesh and assembles these into a global stiffness matrix and internal force vector.  This function contains the updated Lagrangian formulation and the constitutive model controlling the stress-strain behaviour of each material point.  The function calls three other functions: <code class="highlighter-rouge">Hooke3D</code> a linear elastic constitutive model, <code class="highlighter-rouge">VMconst</code> a linear elastic perfectly plastic von Mises constitutive model and <code class="highlighter-rouge">formULstiff</code> a function to determine the consistent spatial tangent modulus.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">updateMPs</code>: called on line 31 of <code class="highlighter-rouge">ample.m</code>, the function updates the positions and volumes of the material points based on the incremental nodal displacements and the current value of the deformation gradient at each material point.  For generalised interpolation material point methods, the function also updates the domain lengths.  This function depends on the type of material point method and will require modification if a user wishes to implement other domain-based methods.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">postPro</code>: called on line 32 of <code class="highlighter-rouge">ample.m</code>, the function produces VTK output files that can be viewed when the analysis has finished via a suitable VTK file visualised (such as VisIt or Paraview, amongst others).  The function calls two functions: <code class="highlighter-rouge">makeVtk</code> and <code class="highlighter-rouge">makeVtkMP</code> that generate VTK files for the background mesh and the material points, respectively.</p>
+  </li>
+</ul>
+
+<p>The structure of these functions is shown diagrammatically below, where the solid and dashed lines around the function boxes indicate that the function does or does not calls other functions, respectively.  The black arrows indicate the function calls and the locations of the loops in the code are indicated by the grey lines.  For example, <code class="highlighter-rouge">Hook3d.m</code> is called by <code class="highlighter-rouge">detMPs.m</code>; and <code class="highlighter-rouge">linSolve.m</code> and <code class="highlighter-rouge">detMPs.m</code> are called within the equilibrium, or N-R, loop.</p>
+
+<p><img src="/assets/img/codeStructure.jpg" alt="MPM steps" /></p>
+
+<p>The majority of AMPLE’s functions do not depend on: (i) the form of the background mesh, (ii) the type of material point methods adopted or (iii) the number of physical dimensions (1D, 2D plane strain or 3D).  The exceptions to this are: <code class="highlighter-rouge">elemMPinfo.m</code> which depends on the background mesh type and the material point variant and <code class="highlighter-rouge">updateMPs.m</code> which depends on the material point variant as different updating procedures are required for different material point methods.  Obviously <code class="highlighter-rouge">setupGrid.m</code> depends on all three of the above points as it contains the analysis-specific information that will change depending on the user’s requirements.</p>
+
+<p>The functions are organised into a number of folders depending on their purpose, specifically: <strong>constitutive</strong> contains the constitutive functions, <strong>setup</strong> contains the functions that are required to provide the analysis-specific information, <strong>plotting</strong> contains the post-processing files and <strong>functions</strong> contains the remaining M files. AMPLE’s file structure also contains <strong>output</strong> and <strong>documentation</strong> that contain the generated VTK files and AMPLE’s html documentation.</p>
+
+<h2 id="function-format">Function format</h2>
+
+<p>All of AMPLE’s functions share a common file format.  An example AMPLE function is shown below, specifically the function to determine the external forces on the background mesh based on body and point forces at material points, <code class="highlighter-rouge">detExtForce.m</code>, which is called on line 12 of <code class="highlighter-rouge">ample.m</code>. The function starts with a common comment block that includes the following information: (i) brief description/title; (ii) author and date information with a more detailed description of the function’s purpose; (iii) function call format; (iv) required input information; (v) the function’s output; and (vi) a <em>see also</em> section detailing the functions that are called by the function (in the case of <code class="highlighter-rouge">detExtForce.m</code>, none).</p>
+
+<p><img src="/assets/img/extForceExample.jpg" alt="MPM steps" /></p>
+
+<h2 id="data-structures">Data Structures</h2>
+
+<p>The majority of the analysis information required by AMPLE is stored in two structured arrays:</p>
+<ul>
+  <li>
+    <p><strong>mpData</strong>: that contains material point information, such as the point’s position, deformation gradient, Cauchy stress, etc.</p>
+  </li>
+  <li>
+    <p><strong>mesh</strong>: that contains information about the background mesh, such as the positions of the nodes and the topology of each of the background mesh elements.</p>
+  </li>
+</ul>
+
+<p>MATLAB’s structured arrays provide a convenient way to store the material point data as different material points will potentially influence different numbers of nodes and therefore will require different amounts of storage for, for example, the basis functions that influence the point and their spatial derivatives.</p>
 
 
         <div class="page-footer">
