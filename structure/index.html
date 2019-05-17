@@ -85,12 +85,12 @@
   </li>
 </ul>
 
-<p><img src="/assets/img/alg.jpg" alt="MPM steps" /></p>
+<p><img src="/assets/img/alg.jpg" alt="AMPLE algorithm" /></p>
 
 <p>AMPLE’s main script, <code class="highlighter-rouge">ample.m</code>, is shown in its entirety below.  The format of the code aligns with the algorithm shown above.  Comments are shown in green and have been truncated on the right hand side for clarity of the executed code.  Only two of the three loops described above can be seen in the main <code class="highlighter-rouge">ample.m</code> file: (1) a loadstep <strong>for</strong> loop spanning lines 9 through 33 and
 (2) a Newton-Raphson <strong>while</strong> loop over lines 21 through 30.  The material point loop is contained within the  <code class="highlighter-rouge">detMPs.m</code> function on line 25.</p>
 
-<p><img src="/assets/img/ampleMain.jpg" alt="MPM steps" /></p>
+<p><img src="/assets/img/ampleMain.jpg" alt="AMPLE main code" /></p>
 
 <p>The main <code class="highlighter-rouge">ample.m</code> script calls eight functions, the purpose of each of these functions is explained below:</p>
 <ul>
@@ -122,7 +122,7 @@
 
 <p>The structure of these functions is shown diagrammatically below, where the solid and dashed lines around the function boxes indicate that the function does or does not calls other functions, respectively.  The black arrows indicate the function calls and the locations of the loops in the code are indicated by the grey lines.  For example, <code class="highlighter-rouge">Hook3d.m</code> is called by <code class="highlighter-rouge">detMPs.m</code>; and <code class="highlighter-rouge">linSolve.m</code> and <code class="highlighter-rouge">detMPs.m</code> are called within the equilibrium, or N-R, loop.</p>
 
-<p><img src="/assets/img/codeStructure.jpg" alt="MPM steps" /></p>
+<p><img src="/assets/img/codeStructure.jpg" alt="AMPLE code structure" /></p>
 
 <p>The majority of AMPLE’s functions do not depend on: (i) the form of the background mesh, (ii) the type of material point methods adopted or (iii) the number of physical dimensions (1D, 2D plane strain or 3D).  The exceptions to this are: <code class="highlighter-rouge">elemMPinfo.m</code> which depends on the background mesh type and the material point variant and <code class="highlighter-rouge">updateMPs.m</code> which depends on the material point variant as different updating procedures are required for different material point methods.  Obviously <code class="highlighter-rouge">setupGrid.m</code> depends on all three of the above points as it contains the analysis-specific information that will change depending on the user’s requirements.</p>
 
@@ -132,7 +132,7 @@
 
 <p>All of AMPLE’s functions share a common file format.  An example AMPLE function is shown below, specifically the function to determine the external forces on the background mesh based on body and point forces at material points, <code class="highlighter-rouge">detExtForce.m</code>, which is called on line 12 of <code class="highlighter-rouge">ample.m</code>. The function starts with a common comment block that includes the following information: (i) brief description/title; (ii) author and date information with a more detailed description of the function’s purpose; (iii) function call format; (iv) required input information; (v) the function’s output; and (vi) a <em>see also</em> section detailing the functions that are called by the function (in the case of <code class="highlighter-rouge">detExtForce.m</code>, none).</p>
 
-<p><img src="/assets/img/extForceExample.jpg" alt="MPM steps" /></p>
+<p><img src="/assets/img/extForceExample.jpg" alt="AMPLE function format" /></p>
 
 <h2 id="data-structures">Data Structures</h2>
 
